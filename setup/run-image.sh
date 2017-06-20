@@ -25,10 +25,10 @@ Variable definitions:
 '
 
 docker run -d -p 9001:8080 \
-	-e APIGEE_ORG=. \
-	-e APIGEE_USERNAME=. \
-	-e APIGEE_PASSWORD=. \
-	-e API_DOMAIN_TEST=. \
-	-e API_DOMAIN_PROD=. \
-	-e SCM_URL=. \
+	-e APIGEE_ORG=askanapigeekapp \
+	-e APIGEE_USERNAME=maruthi@apigee.com \
+	-e APIGEE_PASSWORD=Chanduom@1991 \
+	-e API_DOMAIN_TEST=test \
+	-e API_DOMAIN_PROD=prod \
+	-e SCM_URL=git@gitlab.apigee.com:maruthi/accelerator-ci-maven.git \
 --name my-ci apigee/ci
