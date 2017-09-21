@@ -59,13 +59,11 @@
 				<apigee.env>prod</apigee.env>
 				<apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
 				<apigee.apiversion>v1</apigee.apiversion>
-				<apigee.org>${env.APIGEE_ORG}</apigee.org>
+				<apigee.org>marutichandc-trial</apigee.org>
 				<apigee.username>${env.APIGEE_USERNAME}</apigee.username>
 				<apigee.password>${env.APIGEE_PASSWORD}</apigee.password>
 				<apigee.options>override</apigee.options>
 				<apigee.override.delay>5</apigee.override.delay>
-				<api.northbound.domain>${env.API_DOMAIN_PROD}</api.northbound.domain>
-				<api.testtag>~@wip,~@mock</api.testtag>
 			</properties>
 		</profile>
 	</profiles>
@@ -226,6 +224,20 @@
 							<executable>./node_modules/mocha/bin/mocha</executable>
 							<commandlineArgs>
 								test/unit
+							</commandlineArgs>
+						</configuration>
+					</execution>
+                                        <!-- Bundle linter -->
+					<execution>
+						<id>apigeelint</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>./node_modules/apigeelint/main.js</executable>
+							<commandlineArgs>
+								-s apiproxy/ -f table.js
 							</commandlineArgs>
 						</configuration>
 					</execution>

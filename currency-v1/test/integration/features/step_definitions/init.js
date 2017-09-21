@@ -9,9 +9,7 @@ console.log('currency api: [' + config.currencyApi.domain + ', ' + config.curren
 module.exports = function() {
 	// cleanup before every scenario
 	this.Before(function(scenario, callback) {
-		this.apickli = new apickli.Apickli('https',
-										   config.currencyApi.domain + config.currencyApi.basepath,
-										   './test/integration/features/fixtures/');
+              this.apickli = new apickli.Apickli('http', 'httpbin.org');
 		callback();
 	});
 };
