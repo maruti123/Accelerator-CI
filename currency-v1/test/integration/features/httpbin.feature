@@ -58,10 +58,6 @@ Feature:
     When I DELETE /delete
     Then response body should contain hello-world
 
-  Scenario: Setting body payload from file
-    Given I pipe contents of file ./test/features/fixtures/requestBody.xml to body
-    When I POST to /post
-    Then response body should contain "<a>b</a>"
 
   Scenario: Sending request with basic auth authentication
     Given I have basic authentication credentials username and password
@@ -184,11 +180,6 @@ Feature:
     Then response body path $.args.argument1 should be 1
     And response body path $.args.argument2 should be test
 
-  Scenario: checking values of query parameters passed in url in delete request
-    When I DELETE /delete?argument1=1&argument2=test
-    Then response body path $.args.argument1 should be 1
-    And response body path $.args.argument2 should be test
-
   Scenario: checking values of query parameter passed as datatable in delete request
     Given I set query parameters to
       | parameter | value |
@@ -222,19 +213,6 @@ Feature:
     And response header Allow should be (.*)HEAD(.*)
     And response header Content-Length should be 0
 
-  Scenario: should differentiate between empty string and non-existing element in JSON path assertions
-    When I GET /get
-    Then response code should be 200
-    And response body path $.origin should be [0-9\.]+
-    And response body path $.notthere should be null
-
-  Scenario: should successfully validate json using schema
-    When I GET /get
-    Then response body should be valid according to schema file ./test/features/fixtures/get-simple.schema
-
-  Scenario: should successfully validate json using the OpenAPI spec description
-    When I GET /get
-    Then response body should be valid according to openapi description GetResponse in file ./test/features/fixtures/get-simple-swagger-spec.json
 
   Scenario: should successfully validate json array
     Given I set body to ["a","b","c"]
@@ -248,45 +226,4 @@ Feature:
     Then response body path $.json should be of type array
     And response body path $.json should be of type array with length 3
 
-  Scenario: checking values of form parameter passed as datatable in post request
-    Given I set form parameters to
-      | parameter | value |
-      | argument1 | 1     |
-      | argument2 | test  |
-    When I POST to /post
-    Then response body path $.form.argument1 should be 1
-    And response body path $.form.argument2 should be test
   
-  Scenario: checking values of form parameter passed as datatable in put request
-    Given I set form parameters to
-      | parameter | value |
-      | argument1 | 1     |
-      | argument2 | test  |
-    When I PUT /put
-    Then response body path $.form.argument1 should be 1
-    And response body path $.form.argument2 should be test
-  
-  Scenario: checking values of form parameter passed as datatable in delete request
-    Given I set form parameters to
-      | parameter | value |
-      | argument1 | 1     |
-      | argument2 | test  |
-    When I DELETE /delete
-    Then response body path $.form.argument1 should be 1
-    And response body path $.form.argument2 should be test
-    
-  Scenario: checking values of form parameter passed as datatable in patch request
-    Given I set form parameters to
-      | parameter | value |
-      | argument1 | 1     |
-      | argument2 | test  |
-    When I PATCH /patch
-    Then response body path $.form.argument1 should be 1
-    And response body path $.form.argument2 should be test
-
-  Scenario: should successfully pipe form parameters
-    Given I set Authorization header to Basic abcd
-    And I pipe contents of file ./test/features/fixtures/formparams to body
-    When I POST to /post
-    Then response code should be 200
-    And response body path $.data should be a=a&b=b&c=c
